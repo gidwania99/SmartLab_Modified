@@ -38,6 +38,9 @@
             integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
             crossorigin="anonymous"
         ></script>
+        <script src="js/jquery-3.6.0.min.js"></script>
+        
+        
     </head>
     <body
         class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between"
@@ -75,12 +78,12 @@
                         </li>
                         <li class="nav-item px-2 m-1 font-weight-bold">
                             <a
-                                href=""
-                                >HOME</a
+                                href="" id="username"
+                                ></a
                             >
                         </li>
                         <li class="nav-item px-2 m-1 font-weight-bold">
-                            <a href="">HOME</a>
+                            <a href="" onclick="logout()">logout</a>
                         </li>
                     </ul>
                 </div>
@@ -340,5 +343,8 @@
             });
         </script>
         <script src="js/toggleSidebar.js"></script>
+        <script src="output_dirs/allfiles/backend_global.js"></script>
+        <script>checkAuth()</script>
+        
     </body>
 </html>

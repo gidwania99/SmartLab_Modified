@@ -1,6 +1,5 @@
 body {
-  /* background:url('http://cdn.wallpapersafari.com/13/6/Mpsg2b.jpg'); */
-  background: rebeccapurple;
+  background: border-box;
   margin:0px;
   font-family: 'Ubuntu', sans-serif;
 	background-size: 100% 110%;
@@ -23,12 +22,13 @@ h1, h2, h3, h4, h5, h6, a {
 }
 .login-form {
   border:.5px solid #fff;
-  background:#4facff;
+  width: 350px;
+  background: cornflowerblue;
   border-radius:10px;
   box-shadow:0px 0px 10px #000;
 }
 .login-form h3 {
-  text-align:left;
+  text-align: left;
   margin-left:40px;
   color:#000;
 }
@@ -70,16 +70,29 @@ h1, h2, h3, h4, h5, h6, a {
 .forgot-pass{
   color: #fff;
 }
-/*Media Querie
-@media only screen and (min-width : 150px) and (max-width : 1200px){*/
-.login-form h3 {
-  text-align:center;
-  margin:0;
-}
+
 .sign-up, .no-access {
   margin:10px 0;
 }
 .login-button {
   margin-bottom:10px;
+  border: none;
+  border-radius: 12px;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 25%;
+  font-weight: 600;
 }      
+.error{
+  color:#D2042D;
+  font-size: larger;
+  text-align: left;
+  margin-left: 35px;
+  margin-bottom: 5px;
+}
 

@@ -27,6 +27,13 @@ class User(db.Document):
     email = db.StringField()
     password = db.StringField()
     reg_date = db.DateTimeField(datetime.now)
+
+class SimulationFootPrints(db.Document):
+    email = db.StringField()
+    topic = db.StringField()
+    error = db.IntField()
+    time_spent = db.DictField()
+    date = db.DateTimeField(datetime.now)
           
 @app.route('/signUp', methods=['POST'])
 def signUp():   
@@ -78,6 +85,28 @@ def login():
             return jsonify(msg)
     msg = {"msg":"Invalid Username or Password!",
            "status":1}
+    return jsonify(msg)
+
+@app.route('/addFootprints' , methods=['POST'])
+def addFootprints():
+    data = request.get_json()
+
+    data = jsonify(data)
+    return data
+
+@app.route('/simulationFootPrints' , methods=['POST'])
+def addSimulationFootPrints():
+    time = datetime.today()
+    data = request.get_json()
+    doc = SimulationFootPrints()
+    doc.email=data['username']
+    doc.topic=data['topic']
+    doc.error=data['error']
+    doc.time_spent['min']=data['min']
+    doc.time_spent['sec']=data['sec']
+    doc.date=time
+    doc.save()
+    msg = {'status':True}
     return jsonify(msg)
      
 if __name__ == '__main__':

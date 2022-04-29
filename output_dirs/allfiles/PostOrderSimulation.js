@@ -14,6 +14,7 @@ var closeModalButton = document.getElementById('closeModalButton');
 var falseCount = 0;
 var counter = 0;
 var userAnsList = [];
+recordTime();
 canvas.addEventListener('mousedown', function (e) {
     var i = 0;
     var [canvasX, canvasY] = canvasComponent.getCursorPosition(e);
@@ -178,6 +179,7 @@ function writeSimulationInstructions(node) {
     }
     if (postOrderNodeList.length == counter) {
         writeInstruction("Congratulation", "You have Completed this..", "done");
+        simulationFootPrint(falseCount, 'Postorder');
         redirecting(true);
     }
 }

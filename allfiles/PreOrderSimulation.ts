@@ -23,6 +23,7 @@ var counter: number = 0;
 
 var userAnsList: BinarySearchTreeNode[] = [];
 
+recordTime()
 
 canvas.addEventListener('mousedown', function (e) {
 
@@ -145,6 +146,7 @@ function writeSimulationInstructionsPreorder(node: BinarySearchTreeNode) {
     }
     if (preOrderNodeList.length == counter) {
         writeInstructionPreorder("Congratulations", "You have Completed preorder traversal.", "done")
+        simulationFootPrint(falseCount,'Preorder')
         redirecting(true);
     }
 }

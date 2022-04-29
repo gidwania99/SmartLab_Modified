@@ -26,7 +26,7 @@ var userAnsList: BinarySearchTreeNode[] = [];
 
 
 
-
+recordTime()
 
 
 canvas.addEventListener('mousedown', function (e) {
@@ -197,6 +197,7 @@ function writeSimulationInstructionsInorder(node: BinarySearchTreeNode) {
     }
     if (inorderNodeList.length == counter) {
         writeInstructionInorder("Congratulations", "You have Completed this..", "done")
+        simulationFootPrint(falseCount , 'Inorder')
         redirecting(true);
     }
 }

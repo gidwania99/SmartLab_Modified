@@ -101,6 +101,7 @@ function startDelesion(node) {
         let isRootNode = false;
         tmpHasLeftSubtree = false;
         if (node.parent == null) { ///it is root node
+            isRootNode = true;
             writeInstructions(node.value + " is a root node.\nDelete " + node.value + ".");
             root = null;
             yield stopeTime();
@@ -108,10 +109,14 @@ function startDelesion(node) {
             writeInstructions(node.value + " deleted successfully.\n Tree is Empty.");
         }
         else if (node.left == null && node.right == null) { //if leaf node
-            if (node.value < node.parent.value)
-                node.parent.left = null;
-            else
-                node.parent.right = null;
+            if (isRootNode)
+                node = null;
+            else {
+                if (node.value < node.parent.value)
+                    node.parent.left = null;
+                else
+                    node.parent.right = null;
+            }
             writeInstructions(node.value + " is a leaf node\nDelete " + node.value + ".");
             yield stopeTime();
             drawBinaryTree(root, canvas);

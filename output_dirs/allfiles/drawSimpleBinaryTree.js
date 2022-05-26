@@ -57,6 +57,8 @@ function drawSimpleBinaryTree(root, canvasElement, height, width, isGameTree = f
         FIXED_VALUE.leafNodeSpace;
     // Initialize the canvas
     const canvasComponent = new CanvasComponent(canvasElement);
+    if (!isGameTree)
+        canvasComponent.clearCanvas();
     // Recursively draw the tree
     if (!isGameTree) {
         recursivelyDrawNodes(root, canvasComponent, 1, xStart, xEnd);

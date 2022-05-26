@@ -190,6 +190,7 @@ function showModal() {
     document.getElementById("myModal").style.display = "block";
 }
 function redirecting(success = false) {
+    simulationRecord(falseCount, document.title);
     document.getElementById("isdiv").style.display = "none";
     if (success == true) {
         showModal();

@@ -14,7 +14,8 @@ var testModal = document.getElementById('testModal');
 var falseCount = 0;
 var counter = 0;
 var userAnsList = [];
-recordTime();
+sim_min = min;
+sim_sec = sec;
 canvas.addEventListener('mousedown', function (e) {
     var i = 0;
     var [canvasX, canvasY] = canvasComponent.getCursorPosition(e);
@@ -106,7 +107,6 @@ function writeSimulationInstructionsPreorder(node) {
     }
     if (preOrderNodeList.length == counter) {
         writeInstructionPreorder("Congratulations", "You have Completed preorder traversal.", "done");
-        simulationFootPrint(falseCount, 'Preorder');
         redirecting(true);
     }
 }

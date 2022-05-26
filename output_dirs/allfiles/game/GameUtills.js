@@ -37,8 +37,7 @@ function checkForCollissions() {
     bullet.forEach((element, index) => {
         for (let i = 0; i < gameNodeList.length; i++) {
             if (!gameNodeList[i].isLocked && (gameNodeList[i].nodeCircle.isinside(element.pt.x, element.pt.y) || gameNodeList[i].nodeCircle.isinside(element.pt.x + element.img.width, element.pt.y))) {
-                if (gameNodeList[i] == preOrderNodeList[nodeCount]) {
-                    console.warn("Boom!");
+                if (gameNodeList[i] == correctOrderNodeList[nodeCount]) {
                     score += 10;
                     var isfound = false;
                     var foundNode;
@@ -64,7 +63,7 @@ function checkForCollissions() {
                     bullet.splice(index, 1);
                     element.isAlive = false;
                     blastNode(gameNodeList[i]);
-                    if (gameNodeList[i] == preOrderNodeList[preOrderNodeList.length - 1]) {
+                    if (gameNodeList[i] == correctOrderNodeList[correctOrderNodeList.length - 1]) {
                         console.warn("Level completed!!");
                         isGameWon = true;
                         btnGameNext.style.display = "inline";
@@ -152,6 +151,8 @@ function gameOver() {
     isGameOver = true;
     btnGameBack.style.display = "inline";
     btnGamerestart.style.display = "inline";
+    updateLeaderBoard(score, order, Math.floor(seconds / 60), seconds % 60);
+    seconds = 0;
 }
 function showGameButtons() {
     // btnGameCanvas.style.display = "block"

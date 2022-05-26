@@ -106,6 +106,7 @@ function checkResult(isTimeOver = false) {
         }
     }
     var percent = (total * 100) / (postOrderNodeList.length);
+    testScore(percent.toFixed(2), 'Postorder', 2 - mins, 60 - seconds);
     testResult.innerHTML = "You Scored " + percent.toFixed(2) + " % ";
     if (percent == 100) {
         startConfettiInner(animationContext);

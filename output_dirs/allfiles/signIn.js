@@ -23,7 +23,7 @@ $(function(){
             data: JSON.stringify(data),
             success: function(response){
                 if(response['status'] == 0){
-                    window.sessionStorage.setItem('username' , response['session_name'])
+                    window.sessionStorage.setItem('email' , response['session_name'])
                     window.location.href = 'Introduction.html';
                 }
                 else{

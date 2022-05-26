@@ -81,6 +81,7 @@ function checkResultInorder(isTimeOver = false) {
         }
     }
     var percent = (total * 100) / (inorderNodeList.length);
+    testScore(percent.toFixed(2), 'Inorder', 2 - mins, 60 - seconds);
     testResult.innerHTML = "You Scored " + percent.toFixed(2) + " % ";
     modalText.innerHTML = "You Scored " + percent.toFixed(2) + " % " + "<br>";
     if (percent == 100) {

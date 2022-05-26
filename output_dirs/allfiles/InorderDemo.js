@@ -28,6 +28,7 @@ var incrementSeconds = 1000;
 var waitForPressResolve;
 mainInorder('demo');
 writeInorderRules();
+recordTime();
 btnRestartInorder.onclick = inorder;
 btnStartInorder.onclick = inorder;
 function inorder() {

@@ -28,12 +28,34 @@ class User(db.Document):
     password = db.StringField()
     reg_date = db.DateTimeField(datetime.now)
 
-class SimulationFootPrints(db.Document):
+
+class FootPrints(db.Document):
     email = db.StringField()
-    topic = db.StringField()
-    error = db.IntField()
+    page = db.StringField()
+    experiment = db.StringField()
     time_spent = db.DictField()
+    moves_to = db.DictField()
+
+
+class SimulationRecord(db.Document):
+    email = db.StringField()
+    experiment = db.StringField()
+    error = db.IntField()
+    time_taken = db.DictField()
     date = db.DateTimeField(datetime.now)
+
+class TestScore(db.Document):
+    email = db.StringField()
+    experiment = db.StringField()
+    score = db.FloatField()
+    time_taken = db.DictField()
+    date = db.DateTimeField(datetime.now)
+
+class LeaderBoard(db.Document):
+    email = db.StringField()
+    experiment = db.StringField()
+    score = db.FloatField()
+    time_taken = db.DictField()
           
 @app.route('/signUp', methods=['POST'])
 def signUp():   
@@ -87,29 +109,67 @@ def login():
            "status":1}
     return jsonify(msg)
 
-@app.route('/addFootprints' , methods=['POST'])
-def addFootprints():
-    data = request.get_json()
 
-    data = jsonify(data)
-    return data
-
-@app.route('/simulationFootPrints' , methods=['POST'])
-def addSimulationFootPrints():
+@app.route('/simulationRecord' , methods=['POST'])
+def addSimulationRecord():
     time = datetime.today()
     data = request.get_json()
-    doc = SimulationFootPrints()
-    doc.email=data['username']
-    doc.topic=data['topic']
-    doc.error=data['error']
-    doc.time_spent['min']=data['min']
-    doc.time_spent['sec']=data['sec']
-    doc.date=time
+    doc = SimulationRecord(email=data['email'],experiment=data['experiment'],error=data['error'],date=time)
+    doc.time_taken['min']=data['min']
+    doc.time_taken['sec']=data['sec']
     doc.save()
     msg = {'status':True}
     return jsonify(msg)
-     
+
+@app.route('/testScore' , methods=['POST'])
+def addTestScore():
+    time = datetime.today()
+    data = request.get_json()
+    doc = TestScore(email=data['email'],experiment=data['experiment'],score=data['score'],date=time)
+    doc.time_taken['min']=data['min']
+    doc.time_taken['sec']=data['sec']
+    doc.save()
+    msg = {'status':True}
+    return jsonify(msg)
+
+@app.route('/addFootPrints' , methods=['POST'])
+def addFootPrints():
+    data = request.get_json()
+    doc = FootPrints(email=data['email'],page=data['page'],experiment=data['experiment'])
+    doc.time_spent['min']=data['min']
+    doc.time_spent['sec']=data['sec']
+    doc.moves_to['page']=data['moveToPage']
+    doc.moves_to['experiment']=data['moveToExperiment']
+    doc.save()
+    msg={'status':True}
+    return jsonify(msg)
+
+@app.route('/updateLeaderBoard' , methods=['POST'])
+def updateLeaderBoard():
+    data = request.get_json()
+    doc = LeaderBoard(email=data['email'],experiment=data['experiment'],score=data['score'])
+    doc.time_taken['min']=data['min']
+    doc.time_taken['sec']=data['sec']
+    doc.save()
+    msg = {'status':True}
+    return jsonify(msg)
+
+@app.route('/getLeaderBoard', methods=['POST'])
+def getLeaderBoard():
+    data = request.get_json()
+    data = LeaderBoard.objects(experiment=data['experiment']).order_by('-score','time_taken')
+    return jsonify(data)
+
+@app.route('/getFootPrints' , methods=['POST'])
+def getFootPrint():
+    data = FootPrints.aggregate([
+        {
+            '$group': { '_id': "$experiment", 'sum_min': { '$sum': "$time_spent['min']" }}
+        }
+    ])
+    data = jsonify(data)
+    return data
+         
 if __name__ == '__main__':
-    #app.secret_key = 'SmartLab2022'
     app.run(debug=True)
 

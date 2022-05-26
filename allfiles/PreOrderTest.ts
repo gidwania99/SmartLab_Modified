@@ -109,6 +109,7 @@ function checkResultPreorder(isTimeOver: boolean = false) {
         }
     }
     var percent = (total * 100) / (preOrderNodeList.length)
+    testScore(percent.toFixed(2) , 'Preorder' , 2 - mins , 60 - seconds)
     testResult.innerHTML = "You Scored " + percent.toFixed(2) + " % ";
     modalText.innerHTML = "You Scored " + percent.toFixed(2) + " % " + "<br>"
     if (percent == 100) {

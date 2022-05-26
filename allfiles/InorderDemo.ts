@@ -33,6 +33,7 @@ var waitForPressResolve;
 
 mainInorder('demo');
 writeInorderRules();
+recordTime();
 
 btnRestartInorder.onclick = inorder;
 btnStartInorder.onclick = inorder

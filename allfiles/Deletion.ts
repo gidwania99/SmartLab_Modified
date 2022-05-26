@@ -113,6 +113,7 @@ window.onresize = () => {
         let isRootNode:boolean=false;
         tmpHasLeftSubtree=false;
         if(node.parent==null){  ///it is root node
+            isRootNode=true;
             writeInstructions(node.value+" is a root node.\nDelete "+node.value+".");
             root=null;
             await stopeTime();
@@ -125,9 +126,12 @@ window.onresize = () => {
         else if(node.left==null && node.right==null){    //if leaf node
             
           
-           
-            if(node.value<node.parent.value) node.parent.left=null;
-            else node.parent.right=null;
+            if(isRootNode)
+                node=null;
+            else{
+                if(node.value<node.parent.value) node.parent.left=null;
+                else node.parent.right=null;
+            }
             
             
             writeInstructions(node.value+" is a leaf node\nDelete "+node.value+".");

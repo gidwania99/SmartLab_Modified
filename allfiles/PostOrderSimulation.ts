@@ -19,7 +19,8 @@ var counter: number = 0;
 
 var userAnsList: BinarySearchTreeNode[] = [];
 
-recordTime()
+sim_min = min
+sim_sec = sec
 
 canvas.addEventListener('mousedown', function (e) {
 
@@ -220,7 +221,6 @@ function writeSimulationInstructions(node: BinarySearchTreeNode) {
     
     if (postOrderNodeList.length == counter) {
         writeInstruction("Congratulation", "You have Completed this..", "done")
-        simulationFootPrint(falseCount , 'Postorder')
         redirecting(true);
     }
 }

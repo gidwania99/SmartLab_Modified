@@ -46,6 +46,8 @@ btnGameNext.style.display = "none";
 var btnGameBack: HTMLButtonElement = <HTMLButtonElement>document.getElementById("gameBack");
 btnGameBack.style.display = "none";
 
+var order = document.title;
+
 
 var bullet: Bullet[] = new Array();
 var planeObj: Plane;
@@ -58,6 +60,8 @@ var score = 20;
 var isGameStarted = false;
 var level = 1;
 var wrongNodeList:BinarySearchTreeNode[]=[];
+var correctOrderNodeList=[];
+
 
 btnGameStart.onclick = () => {
   btnContainer.style.display = "none";
@@ -129,6 +133,13 @@ function mainGame() {
   setBackgroudOfCanvas();
 
   gameTree(level);
+  if (order == 'Preorder')
+    correctOrderNodeList=preOrderNodeList.slice()
+  else if(order == 'Inorder')
+    correctOrderNodeList=inorderNodeList.slice()
+  else
+    correctOrderNodeList=postOrderNodeList.slice()
+  
   planeObj.draw();
   newRoot = root
   startTreeAnimation();
@@ -197,7 +208,7 @@ function init() {
   clearInterval(treIntervalId);
 
 
-  seconds = 0;
+  
   gameStatus.innerHTML = "";
   btnGamerestart.style.display = "none";
   btnGameBack.style.display = "none";
@@ -220,6 +231,10 @@ function stopGame(){
 }
 
 function nextLevel() {
+  if(level == 5){
+    isGameWon = true
+    gameOver()
+  }
   newRoot.gameYposition = startingGameYposition;
   bullet = [];
   wrongNodeList=[];
@@ -259,6 +274,7 @@ function startTreeAnimation() {
         clearInterval(treIntervalId);
         gameOver();
         writeLife();
+        break;
       
 
       }

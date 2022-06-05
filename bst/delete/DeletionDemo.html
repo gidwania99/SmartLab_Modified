@@ -69,21 +69,31 @@
 <body>
     <header class="vlabs-header sticky-top bg-white">
         <nav class="p-0 navbar navbar-light d-flex align-items-stretch">
-            <!-- <button
-                class="navbar-toggler px-4"
-                type="button"
-                onclick="toggle()"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
-
             <div class="d-flex justify-content-center">
-                <a href="https://vlab.co.in" class="navbar-brand">
-                    <img src="../../images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo" />
+                <a href="../../Introduction.html" class="navbar-brand">
+                    <img
+                        src="../../images/vlabs-color-small-moe.jpg"
+                        alt="vlabs logo"
+                        class="vlabs-logo"
+                    />
                 </a>
             </div>
 
-            <div id="headerNavbar" class="d-none border-top flex-grow-1 d-lg-flex align-items-center"></div>
+            <div
+                id="headerNavbar"
+                class="d-none border-top flex-grow-1 d-lg-flex align-items-center"
+            >
+                <ul
+                    class="navbar-nav ml-auto text-center d-flex flex-md-row"
+                >
+                    <li class="nav-item m-1 font-weight-bold">
+                        <a href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item m-1 font-weight-bold">
+                        <a href="" onclick="logout()">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
     <div class="container m-auto">
@@ -134,51 +144,13 @@
     <script src="../../output_dirs/allfiles/drawBinaryTree.js"></script>
     <script src="../../output_dirs/allfiles/globals.js"></script>
     <script src="../../output_dirs/allfiles/Deletion.js" defer></script>
+    <script src="../../output_dirs/allfiles/backend_global.js"></script>
+
+    <script>
+        checkAuthFirstLevel("Demo", "Delete");
+    </script>
 </body>
 
 </html>
    
    
-    <!--  <body>
-        <div class="container m-auto" >
-            <div class="text-black text-center  bst-text">
-                Binary Search Tree
-            </div>
-            <p class="text-black text-center m-0 order-text">Deletion Demo</p>
-            
-            
-            <div class="text-center">
-              Enter the node to delete: <input type="text" id="num" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" required="true">&nbsp;&nbsp;
-              <input type="button" class="btn-primary" value="delete" id="delete" onclick="deleteNode()">
-            </div><br>
-            <div class="d-flex flex-col justify-center align-center main-content" id="main-content" >
-              <div id="demoInstruction" class="">
-                  <h5 class="text-center m-0 text-observation">Observation</h5>
-                  <div id="demoHints" class="text-center m-0 simulatioHints"> 
-                      Click the Delete button to delete a node.
-                  </div>
-                  <div id="demoOrder" class="text-center simDemoOrder">&nbsp;</div>
-              </div>
-              <div class="">
-                  <canvas id="canvas"  class="text-center"> 
-                  </canvas>
-              </div>
-          </div>
-            </div>
-        </div>
-
-        <div class="footer" id="lab-footer"></div>
-
-        <script src="output_dirs/constants.js"></script>
-        <script src="output_dirs/Canvas.js"></script>
-        <script src="output_dirs/BezierCurve.js"></script>
-        <script src="output_dirs/Circle.js"></script>
-        <script src="output_dirs/BinarySearchTreeNode.js"></script>
-        <script src="output_dirs/treeUtilities.js"></script>
-        <script src="output_dirs/connectPointsWithBezierCurve.js"></script>
-        <script src="output_dirs/drawSimpleBinaryTree.js"></script>
-        <script src="output_dirs/drawBinaryTree.js"></script>
-        <script src="output_dirs/globals.js"></script>
-        <script src="output_dirs/Deletion.js" ></script>
-    </body> -->
-

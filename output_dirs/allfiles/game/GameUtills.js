@@ -4,7 +4,7 @@ function setHeightAndWidthCanvas() {
 }
 function setBackgroudOfCanvas() {
     // var background = new Image();
-    bg.src = "images/background.png";
+    bg.src = "../../images/background.png";
     bg.height = canvas.height;
     bg.width = canvas.width;
     gameContext.drawImage(bg, 0, 0, bg.width, bg.height);

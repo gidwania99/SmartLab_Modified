@@ -16,12 +16,15 @@ const blastWrongImg = document.getElementById("blastWrong");
 blastWrongImg.style.display = "none";
 var htopContainer = document.getElementById("htpContainer");
 htopContainer.style.display = "none";
+var hsContainer = document.getElementById("hsContainer");
+hsContainer.style.display = "none";
 var btnGameCanvas = document.getElementById("btnGameCanvas");
 // btnGameCanvas.style.display="none";
 var btnGameStart = document.getElementById("btnGameStart");
 var btnHP = document.getElementById("HowtoPlay");
 var btnHS = document.getElementById("HighScore");
 var btnBack = document.getElementById("btnBack");
+var btnBackHS = document.getElementById("btnBackHS");
 var gameStatus = document.getElementById("gameStatus");
 var gameLevel = document.getElementById("gameLevel");
 var gameTextInstruction = document.getElementById("gameTextInstruction");
@@ -51,10 +54,24 @@ btnGameStart.onclick = () => {
 btnHP.onclick = () => {
     btnContainer.style.display = "none";
     htopContainer.style.display = "block";
+    hsContainer.style.display = "none";
+};
+btnHS.onclick = () => {
+    getLeaderBoard('Preorder');
+    btnContainer.style.display = "none";
+    hsContainer.style.display = "block";
+    htopContainer.style.display = "none";
 };
 btnBack.onclick = () => {
     btnContainer.style.display = "flex";
     htopContainer.style.display = "none";
+    hsContainer.style.display = "none";
+};
+btnBackHS.onclick = () => {
+    console.log("HI");
+    btnContainer.style.display = "flex";
+    htopContainer.style.display = "none";
+    hsContainer.style.display = "none";
 };
 btnGameBack.onclick = () => {
     gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -63,6 +80,7 @@ btnGameBack.onclick = () => {
     btnContainer.style.display = "flex";
     htopContainer.style.display = "none";
     btnGameBack.style.display = "none";
+    hsContainer.style.display = "none";
 };
 btnGamerestart.onclick = () => {
     console.warn("restart");

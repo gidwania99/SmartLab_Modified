@@ -26,8 +26,12 @@
             href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;family=Raleway&amp;display=swap"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
         <link href="css/vlabs-style.css" rel="stylesheet" />
-        <script src="js/jquery-3.4.1.slim.min.js"></script>
+        <script src="js/jquery-3.6.0.slim.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
             integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
@@ -38,6 +42,7 @@
             integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
             crossorigin="anonymous"
         ></script>
+        <script src="js/jquery-3.6.0.min.js"></script>
     </head>
     <body
         class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between"
@@ -54,7 +59,7 @@
                 </button>
 
                 <div class="d-flex justify-content-center">
-                    <a href="https://vlab.co.in" class="navbar-brand">
+                    <a href="Introduction.html" class="navbar-brand">
                         <img
                             src="images/vlabs-color-small-moe.jpg"
                             alt="vlabs logo"
@@ -70,17 +75,14 @@
                     <ul
                         class="navbar-nav ml-auto text-center d-flex flex-md-row"
                     >
-                        <li class="nav-item px-2 m-1">
-                            <a href="https://vlab.co.in">HOME</a>
+                        <li class="nav-item px-2 m-1 font-weight-bold">
+                            <p style="color: green">Welcome User</p>
                         </li>
-                        <li class="nav-item px-2 m-1">
-                            <a
-                                href="https://vlab.co.in/participating-institutes"
-                                >PARTNERS</a
-                            >
+                        <li class="nav-item px-2 m-1 font-weight-bold">
+                            <a href="">Home</a>
                         </li>
-                        <li class="nav-item px-2 m-1">
-                            <a href="https://vlab.co.in/contact-us">CONTACT</a>
+                        <li class="nav-item px-2 m-1 font-weight-bold">
+                            <a href="" onclick="logout()">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -91,10 +93,7 @@
             class="container-fluid flex-fill d-flex flex-column vlabs-page-main"
         >
             <div class="row py-4 px-4 breadcrumbs">
-                <a
-                    href="https://vlab.co.in/broad-area-computer-science-and-engineering"
-                    class="sidebar-a"
-                >
+                <a href="" class="sidebar-a">
                     Computer Science and Engineering
                 </a>
             </div>
@@ -114,7 +113,7 @@
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">
                                     <a
-                                        href="https://vlab.co.in"
+                                        href="Introduction.html"
                                         class="navbar-brand"
                                     >
                                         <img
@@ -167,10 +166,15 @@
                                     </a>
                                 </div>
                                 <div class="d-flex nav-menu-body">
+                                    <a  class="p-2" onclick="logout()" style="color:#3e6389">
+                                        Logout
+                                    </a>
+                                </div>
+                                <!-- <div class="d-flex nav-menu-body">
                                     <a href="Feedback.html" class="p-2">
                                         Feedback
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -202,9 +206,9 @@
                             Course Alignment
                         </a>
                     </div>
-                    <div class="d-flex nav-menu-body">
+                    <!-- <div class="d-flex nav-menu-body">
                         <a href="Feedback.html" class="p-2"> Feedback </a>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div
@@ -243,15 +247,9 @@
                         class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3"
                         >Community Links</span
                     >
-                    <a href="https://www.sakshat.ac.in/" class="text-light"
-                        >Sakshat Portal</a
-                    >
-                    <a href="http://outreach.vlabs.ac.in/" class="text-light"
-                        >Outreach Portal</a
-                    >
-                    <a href="https://vlab.co.in/faq" class="text-light"
-                        >FAQ: Virtual Labs</a
-                    >
+                    <a href="" class="text-light">Sakshat Portal</a>
+                    <a href="" class="text-light">Outreach Portal</a>
+                    <a href="" class="text-light">FAQ: Virtual Labs</a>
                 </div>
                 <div class="col d-flex flex-column">
                     <span
@@ -270,28 +268,28 @@
                         <a
                             class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center"
                             style="background: #55acee"
-                            href="https://twitter.com/TheVirtualLabs"
+                            href=""
                         >
                             <i class="fa fa-twitter"></i>
                         </a>
                         <a
                             class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center"
                             style="background: #3b5998"
-                            href="https://www.facebook.com/Virtual-Labs-IIT-Delhi-301510159983871/"
+                            href=""
                         >
                             <i class="fa fa-facebook"></i>
                         </a>
                         <a
                             class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center"
                             style="background: #e52d27"
-                            href="https://www.youtube.com/watch?v=asxRaOgk6a0"
+                            href=""
                         >
                             <i class="fa fa-youtube"></i>
                         </a>
                         <a
                             class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center"
                             style="background: #2867b2"
-                            href="https://in.linkedin.com/in/virtual-labs-008ba9136"
+                            href=""
                         >
                             <i class="fa fa-linkedin"></i>
                         </a>
@@ -350,6 +348,8 @@
         </script>
         <script src="js/toggleSidebar.js"></script>
         <script src="output_dirs/allfiles/backend_global.js"></script>
-        <script>checkAuth()</script>
+        <script>
+            checkAuth();
+        </script>
     </body>
 </html>

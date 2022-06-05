@@ -1,9 +1,13 @@
 #app.py
 from flask import Flask, render_template, request, json, redirect, session , jsonify
-from flask_mongoengine import MongoEngine #ModuleNotFoundError: No module named 'flask_mongoengine' = (venv) C:\flaskmyproject>pip install flask-mongoengine
+from flask_mongoengine import MongoEngine
+from grpc import server #ModuleNotFoundError: No module named 'flask_mongoengine' = (venv) C:\flaskmyproject>pip install flask-mongoengine
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from flask_cors import CORS
+import random
+import smtplib , ssl
+from email.message import EmailMessage
  
 
 
@@ -20,7 +24,7 @@ app.config['MONGODB_SETTINGS'] = {
  
 db = MongoEngine()
 db.init_app(app)
- 
+
 class User(db.Document):
     firstName = db.StringField()
     lastName = db.StringField()
@@ -56,6 +60,46 @@ class LeaderBoard(db.Document):
     experiment = db.StringField()
     score = db.FloatField()
     time_taken = db.DictField()
+
+def generateOTP():
+    otp = ''
+    for i in range(6):
+        otp = otp + str(random.randint(0,9))
+    return otp
+
+def sendOTP(email):
+    try:
+        otp = generateOTP()
+        email_content = 'To authenticate your email , please use the following One Time Password(OTP):\n' + otp + '\n\nDo not Share this OTP with anyone.'
+        msg = EmailMessage()
+        msg['Subject'] = 'Email Verification'
+        msg['From'] = 'smartlabsample@gmail.com'
+        msg['to'] = email
+        msg.set_content(email_content)
+        server = smtplib.SMTP('smtp.gmail.com' , 587)
+        server.starttls()
+        server.login('smartlabsample@gmail.com' , 'auyyzooqnnufngcx')
+        server.sendmail('smartlabsample@gmail.com' , email , str(msg))
+        server.quit()    
+        msg = {'otp': otp,
+                'status': 0}
+        return msg
+    except smtplib.SMTPException:
+        msg = {'status':2}
+        return msg
+
+@app.route('/emailVerification' , methods=['POST'])
+def emailVerify():
+    data = request.get_json()
+    email = data['email']
+    users = User.objects(email= email).first()
+    if not users:
+        msg = sendOTP(email)
+        return jsonify(msg)
+    else:
+        msg = {"status":1}
+        return jsonify(msg)
+
           
 @app.route('/signUp', methods=['POST'])
 def signUp():   
@@ -63,26 +107,17 @@ def signUp():
     data = request.get_json()
     _fname = data['fname']
     _lname = data['lname']
-    _email = data['username']
+    _email = data['email']
     _password = data['password']
-    # validate the received values
-    if _fname and _email and _password:
-        _hashed_password = generate_password_hash(_password)
-        _users = User.objects(email=_email).first()
-        if not _users:
-            usersave = User(firstName=_fname,lastName=_lname, email=_email, password=_hashed_password, reg_date=today)
-            usersave.save()
-            msg =  {"msg":"You've Registered Successfully!",
-                    "status":0}
-            return jsonify(msg)
-        else:
-            msg =  {"msg":"A user with this email address already exists!",
-                    "status":1}
-            return jsonify(msg)
-    else:
-        msg =  {"msg":"Enter the required fields!",
-                "status":1}
-        return jsonify(msg)
+
+    # create hashed password
+
+    hashed_password = generate_password_hash(_password)
+    usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password, reg_date=today)
+    usersave.save()
+    msg =  {"msg":"You've Registered Successfully!",
+            "status":0}
+    return jsonify(msg)
  
 @app.route('/signIn', methods=['POST'])
 def login():
@@ -169,7 +204,17 @@ def getFootPrint():
     ])
     data = jsonify(data)
     return data
-         
+
+def updatePassword(email , password):
+    user = User.objects(email = email).first()
+    
+@app.route('/changePassword' , methods=['POST'])
+def changePassword():
+    data = request.get_json()
+    user = User.objects(email= data['email']).first()
+    if data['currentPassword'] == user['password']:
+        updatePassword(data['email'],data['newPassword'])
+
 if __name__ == '__main__':
     app.run(debug=True)
 

@@ -23,6 +23,11 @@ blastWrongImg.style.display = "none";
 var htopContainer: HTMLDivElement = <HTMLDivElement>document.getElementById("htpContainer");
 htopContainer.style.display = "none";
 
+
+var hsContainer: HTMLDivElement = <HTMLDivElement>document.getElementById("hsContainer");
+hsContainer.style.display = "none";
+
+
 var btnGameCanvas: HTMLDivElement = <HTMLDivElement>document.getElementById("btnGameCanvas");
 // btnGameCanvas.style.display="none";
 
@@ -31,6 +36,8 @@ var btnGameStart: HTMLButtonElement = <HTMLButtonElement>document.getElementById
 var btnHP: HTMLButtonElement = <HTMLButtonElement>document.getElementById("HowtoPlay");
 var btnHS: HTMLButtonElement = <HTMLButtonElement>document.getElementById("HighScore");
 var btnBack: HTMLButtonElement = <HTMLButtonElement>document.getElementById("btnBack");
+var btnBackHS: HTMLButtonElement = <HTMLButtonElement>document.getElementById("btnBackHS");
+
 
 var gameStatus: HTMLParagraphElement = <HTMLParagraphElement>document.getElementById("gameStatus");
 var gameLevel: HTMLParagraphElement = <HTMLParagraphElement>document.getElementById("gameLevel");
@@ -73,11 +80,28 @@ btnGameStart.onclick = () => {
 btnHP.onclick = () => {
   btnContainer.style.display = "none";
   htopContainer.style.display = "block";
+  hsContainer.style.display ="none"
+
+}
+
+btnHS.onclick = () =>{
+  getLeaderBoard('Preorder')
+  btnContainer.style.display = "none"
+  hsContainer.style.display ="block"
+  htopContainer.style.display="none"
 
 }
 btnBack.onclick = () => {
   btnContainer.style.display = "flex";
   htopContainer.style.display = "none";
+  hsContainer.style.display = "none"
+
+}
+btnBackHS.onclick = () => {
+  console.log("HI");
+  btnContainer.style.display = "flex";
+  htopContainer.style.display = "none";
+  hsContainer.style.display = "none"
 
 }
 btnGameBack.onclick=()=>{
@@ -88,6 +112,7 @@ btnGameBack.onclick=()=>{
   htopContainer.style.display = "none";
   btnGameBack.style.display = "none";
 
+  hsContainer.style.display ="none"
 }
 btnGamerestart.onclick = () => {
   console.warn("restart")

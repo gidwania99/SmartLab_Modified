@@ -1,3 +1,10 @@
+var graphCanvas = document.getElementById("chart_canvas");
+// var graphCtx 
+var chartContainer = document.getElementById("chartContainer");
+window.onload = () => {
+    graphCanvas.style.height = "80%";
+    graphCanvas.style.width = "65%";
+};
 $.ajax({
     type: 'POST',
     headers: {

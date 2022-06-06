@@ -57,7 +57,7 @@ btnHP.onclick = () => {
     hsContainer.style.display = "none";
 };
 btnHS.onclick = () => {
-    getLeaderBoard('Preorder');
+    getHighScore(order);
     btnContainer.style.display = "none";
     hsContainer.style.display = "block";
     htopContainer.style.display = "none";

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Inorder</title>
         <script src="../../js/bootstrap.min.js"></script>
-        <script src="../../js/jquery-3.6.0.slim.js"></script>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="../../css/vlabs-style.css" />
         <link rel="stylesheet" href="../../css/bootstrap.min.css" />
         <link rel="stylesheet" href="../../css/game-style.css" />
@@ -46,7 +46,9 @@
                         <li class="nav-item m-1 font-weight-bold">
                             <a href="InorderTest.html"> Evaluation</a>
                         </li>
-
+                        <li class="nav-item px-2 m-1 font-weight-bold">
+                            <a href="../../changepassword.html">Change Password</a>
+                        </li>
                         <li class="nav-item m-1 font-weight-bold">
                             <a href="" onclick="logout()">Logout</a>
                         </li>
@@ -71,7 +73,6 @@
                 <button
                     class="btn btn-primary btn-sm game-custom-btn"
                     id="HighScore"
-                    onclick="getLeaderBoard('Inorder')"
                 >
                     High scores
                 </button>
@@ -103,6 +104,23 @@
                     Back
                 </button>
             </div>
+
+            <div class="how-to-play" id="hsContainer">
+                <ul class="game-instruction-list">
+                    <h2 class="game-instruction-heading" align="center">
+                        <b><u>High Score</u></b>
+                    </h2>
+                    <table id="highscoreTable">
+                    </table>
+                </ul>
+                <button
+                    class="btn btn-warning game-custom-back-btn"
+                    id="btnBackHS"
+                >
+                    Back
+                </button>
+            </div>
+
             <div id="canvasInnerContainer" class="canvas-inner-containers">
                 <div id="btnGameCanvas" class="btn-game-canvas">
                     <p id="gameLevel" class="game-level"></p>

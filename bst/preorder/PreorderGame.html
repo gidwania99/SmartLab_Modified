@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Preorder</title>
         <script src="../../js/bootstrap.min.js"></script>
-        <script src="../../js/jquery-3.6.0.slim.js"></script>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="../../css/vlabs-style.css" />
         <link rel="stylesheet" href="../../css/bootstrap.min.css" />
         <link rel="stylesheet" href="../../css/game-style.css" />
@@ -45,7 +45,9 @@
                         <li class="nav-item m-1 font-weight-bold">
                             <a href="PreOrderTest.html"> Evaluation</a>
                         </li>
-
+                        <li class="nav-item px-2 m-1 font-weight-bold">
+                            <a href="../../changepassword.html">Change Password</a>
+                        </li>
                         <li class="nav-item m-1 font-weight-bold">
                             <a href="" onclick="logout()">Logout</a>
                         </li>
@@ -70,7 +72,6 @@
                 <button
                     class="btn btn-primary btn-sm game-custom-btn"
                     id="HighScore"
-                    
                 >
                     High scores
                 </button>
@@ -103,26 +104,12 @@
                 </button>
             </div>
 
-
-
             <div class="how-to-play" id="hsContainer">
                 <ul class="game-instruction-list">
                     <h2 class="game-instruction-heading" align="center">
                         <b><u>High Score</u></b>
                     </h2>
-                    <table>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Score</th>
-                            <th>gameStatus</th>
-                            <th>sklfs;</th>
-                        </tr>
-                        <tr>
-                            <td>jkfsg</td>
-                            <td>klfjlsf</td>
-                            <td>kjlgfs</td>
-                            <td>gnsfjkl</td>
-                        </tr>
+                    <table id="highscoreTable">
                     </table>
                 </ul>
                 <button
@@ -132,8 +119,6 @@
                     Back
                 </button>
             </div>
-
-
 
             <div id="canvasInnerContainer" class="canvas-inner-containers">
                 <div id="btnGameCanvas" class="btn-game-canvas">
@@ -166,7 +151,7 @@
                 </canvas>
             </div>
         </div>
-     
+
         <script src="../../js/jquery-3.6.0.min.js"></script>
         <script src="../../output_dirs/allfiles/backend_global.js"></script>
         <script src="../../output_dirs/allfiles/game/constants.js"></script>

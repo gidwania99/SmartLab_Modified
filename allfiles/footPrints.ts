@@ -1,3 +1,12 @@
+var graphCanvas : HTMLCanvasElement =<HTMLCanvasElement> document.getElementById("chart_canvas")
+// var graphCtx 
+
+var chartContainer : HTMLDivElement = <HTMLDivElement>document.getElementById("chartContainer");
+window.onload = () =>{
+    graphCanvas.style.height = "80%";
+    graphCanvas.style.width = "65%";
+
+}
 $.ajax({
     type: 'POST',
     headers:{

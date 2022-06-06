@@ -1,6 +1,40 @@
 var otp
 var otp_counter
 
+function signIn() {
+    console.log('called')
+    var data = {
+        'email': $('#inputEmail').val(),
+        'password': $('#inputPassword').val()
+    };
+    $.ajax({
+        type: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        },
+        url: 'http://127.0.0.1:5000/signIn',
+        crossDomain: true,
+        data: JSON.stringify(data),
+        success: function (response) {
+            console.log(response)
+            if (response['status'] == 0) {
+                localStorage.setItem('email', response['email']);
+                localStorage.setItem('name' , response['name']);
+                window.location.href = 'Introduction.html';
+            }
+            else {
+                $('#inputPassword').val('');
+                $('#error').html("*" + response['msg']);
+            }
+        },
+        error: function (error) {
+            console.log(error);
+            //$('#error').html(error);
+        }
+    });
+}
+
 function validateEmail(){
     $('#message').html('')
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -15,7 +49,10 @@ function validateEmail(){
 $(function(){
     $('#inputPassword').keypress(function(event){
         if(event.keyCode === 13){
-           signup();
+            if(document.title == 'Sign In')
+                signIn()
+            else
+                signup()
         }
     });
 });
@@ -103,7 +140,8 @@ function addUser() {
             success: function(response) {
                 alert(response['msg'])
                 localStorage.setItem('email' , sessionStorage.getItem('email'))
-                //sessionStorage.clear()
+                localStorage.setItem('name' , sessionStorage['fname'])
+                sessionStorage.clear()
                 window.location.href = 'Introduction.html'
             }
         });
@@ -161,11 +199,41 @@ function changePassword(){
                 crossDomain: true,
                 data: JSON.stringify(data),
                 success: function(response) {
-                    alert('Password Changed Succesfully!!')
+                    console.log(response)
+                    if(response['status'] == true){
+                        alert('Password Changed Succesfully!!')
+                        window.location.href = 'Introduction.html'
+                    }
+                    else{
+                        $('#message').html('Incorrect Current Password')
+                        $('#currentPassword').val('').focus()
+                        $('#newPassword').val('')
+                        $('#confirmPassword').val('')
+                    }
                 }
             });
         }
-        else
+        else{
             $('#message').html('New Password and Confirm Password does not match!')
+            $('#newPassword').val('').focus()
+            $('#confirmPassword').val('')
+        }
     }
+}
+
+function forgotPassword(){
+    var data = {
+        'email': $('#email').val()
+    }
+    $.ajax({
+        type: "POST",
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        },
+        url: 'http://127.0.0.1:5000/forgotPassword',
+        crossDomain: true,
+        data: JSON.stringify(data),
+        success: function(response) {}
+    });
 }

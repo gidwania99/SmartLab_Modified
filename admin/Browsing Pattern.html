@@ -23,7 +23,7 @@
     <meta name="theme-color" content="#4076e0" />
     <!-- Windows Phone -->
     <meta name="msapplication-navbutton-color" content="#4076e0" />
-    <title>Home</title>
+    <title>Browsing Pattern</title>
     <link rel="shortcut icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
     <link rel="stylesheet"
@@ -182,11 +182,19 @@
             </div>
             <div class="vlabs-page-content px-5 pb-4 flex-grow-0 markdown-body" id="chartContainer">
                 
-                Data About Overall Time Spend By User based on <br/>
-                <input type="radio" id="experiment_chart" name="chart" value="experiment" onclick="getFootPrints('experiment')">
-                <label for="experiment">Experiments</label>
-                <input type="radio" id="page_chart" name="chart" value="page" onclick="getFootPrints('page')" checked>
-                <label for="page">Page</label><br/>
+                Data browsing pattern of User<br/>
+                From <br/>
+                <input type="radio" id="theory" name="chart" value="theory" onclick="getFootPrints('Theory')">
+                <label for="experiment">Theory</label>
+                <input type="radio" id="demo" name="chart" value="demo" onclick="getFootPrints('Demo')" checked>
+                <label for="page">Demo</label>
+                <input type="radio" id="simulation" name="chart" value="simulation" onclick="getFootPrints('Simulation')">
+                <label for="page">Simulation</label>
+                <input type="radio" id="evaluation" name="chart" value="evaluation" onclick="getFootPrints('Evaluation')">
+                <label for="page">Evaluation</label>
+                <input type="radio" id="game" name="chart" value="game" onclick="getFootPrints('Game')">
+                <label for="page">Game</label><br/>
+                To <br/>
                 <canvas id="chart_canvas"></canvas>
                
 

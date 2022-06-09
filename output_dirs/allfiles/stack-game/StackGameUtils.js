@@ -38,8 +38,8 @@ function drawPlanks() {
     for (let i = 0; i < 6; i++) {
         planks[i].draw();
         if (planks[i].status == "outside") {
-            stk_ctx.fillStyle = "#f700ba";
-            stk_ctx.font = "bold 15px arial";
+            stk_ctx.fillStyle = "#8B0000";
+            stk_ctx.font = "bold 18px arial";
             stk_ctx.fillText("Plank" + (i + 1), planks[i].p.x + 5, planks[i].p.y + 40);
         }
         stk_ctx.font = "20px arial";
@@ -89,7 +89,7 @@ function setladderOnCanvas() {
 function drawLadderOnCanvas() {
     for (let i = 0; i < ladders.length; i++) {
         ladders[i].draw();
-        stk_ctx.fillStyle = "yellow";
+        stk_ctx.fillStyle = "#8B0000";
         //stk_ctx.fillStyle="#5b00f7"
         stk_ctx.font = "bold 25px arial";
         stk_ctx.fillText("Ladder" + (i + 1), ladders[i].p.x + 160, ladders[i].p.y + 340);
@@ -215,6 +215,7 @@ function animateGirl(ladder) {
         if (goldCollectedCount == 3) {
             isStkGameWon = true;
             message = "Congratulations!!You Have Won the Game";
+            updateLeaderBoard(score, 'Stack', Math.floor(second / 60), second % 60);
             clearInterval(gameTimer);
         }
         return;

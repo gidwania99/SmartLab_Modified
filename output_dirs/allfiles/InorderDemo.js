@@ -113,7 +113,7 @@ function inOrderManually(node) {
                     if (curr.value == inorderNodeList[inorderNodeList.length - 1].value) {
                         btnNextInorder.style.display = "none";
                         btnRestartInorder.style.display = "inline-block";
-                        delayAnimationInorder(curr, "Inorder Traversal is completed.<br/>Click the Restart Button To Restart Simulation");
+                        delayAnimationInorder(curr, "Inorder Traversal is completed.<br/>Click the Restart Button To Restart Demo");
                     }
                     else {
                         yield delayAnimationInorder(curr, "Now that the right sub-tree of " + curr.value + " is null <br/> Let's move back to the parent node!");

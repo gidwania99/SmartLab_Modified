@@ -177,7 +177,7 @@ function preOrderManually(node) {
         stopBlink();
         btnNext.style.display = "none";
         btnRestart.style.display = "inline-block";
-        demoHints.innerText = "Preorder Traversal is completed\nClick Restart Button To Restart Simulation.";
+        demoHints.innerText = "Preorder Traversal is completed\nClick Restart Button To Restart Demo.";
         // hints.setAttribute('data-after',' ');
     });
 }

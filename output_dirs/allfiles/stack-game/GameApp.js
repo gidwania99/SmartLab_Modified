@@ -40,6 +40,7 @@ var ClimbButton;
 btnHS.onclick = () => {
     btnContainer.style.display = "none";
     stackHsContainer.style.display = "block";
+    getHighScore('Stack');
 };
 btnBackHS.onclick = () => {
     btnContainer.style.display = "flex";
@@ -103,6 +104,7 @@ function mouseDown(e) {
                     if (lifes == 0) {
                         isStkGameOver = true;
                         message += ".Game Over";
+                        updateLeaderBoard(score, 'Stack', Math.floor(second / 60), second % 60);
                         clearInterval(gameTimer);
                         updateStackGameCanvas();
                         break;
@@ -152,6 +154,8 @@ stk_canvas.addEventListener('mouseup', e => {
                         if (lifes == 0) {
                             isStkGameOver = true;
                             message += " .Game Over";
+                            updateLeaderBoard(score, 'Stack', Math.floor(second / 60), second % 60);
+                            clearInterval(gameTimer);
                             updateStackGameCanvas();
                             break;
                         }

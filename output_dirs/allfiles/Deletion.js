@@ -14,7 +14,8 @@ window.onresize = () => {
         drawBinaryTree(root, canvas);
     }
 };
-var numInputBox;
+var numInputBox = document.getElementById("num");
+numInputBox.focus();
 let num = 0;
 const btnDelete = document.getElementById("delete");
 btnDelete.onclick = deleteNode;
@@ -45,7 +46,6 @@ function writeInstructions(string) {
 }
 function deleteNode() {
     return __awaiter(this, void 0, void 0, function* () {
-        numInputBox = document.getElementById("num");
         num = +(numInputBox.value);
         if (num <= 0)
             writeInstructions("Please enter a positive integer!!");
@@ -62,14 +62,14 @@ function SearchNode(node) {
         if (node != null) {
             changeColour(node);
             if (num < node.value) {
-                instruction = num + " < " + node.value + "\nGo to the left subtree.";
+                instruction = num + " is less than " + node.value + "\nso will move to the left subtree.";
                 writeInstructions(instruction);
                 setTimeout(() => {
                     SearchNode(node.left);
                 }, 2500);
             }
             else if (num > node.value) {
-                instruction = num + " > " + node.value + "\nGo to the right subtree.";
+                instruction = num + " is greater than " + node.value + "\nso will move to the right subtree.";
                 writeInstructions(instruction);
                 setTimeout(() => {
                     SearchNode(node.right);
@@ -86,7 +86,9 @@ function SearchNode(node) {
             }
         }
         else {
-            instruction = num + " not found!!";
+            instruction = "Node not found!!";
+            numInputBox.value = '';
+            numInputBox.focus();
             writeInstructions(instruction);
         }
     });
@@ -234,6 +236,8 @@ function startDelesion(node) {
             drawBinaryTree(root, canvas);
             writeInstructions(node.value + " deleted successfully.");
         }
+        numInputBox.value = '';
+        numInputBox.focus();
     });
 }
 function replaceNode(node) {

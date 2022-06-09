@@ -18,6 +18,7 @@ const insertHint = document.getElementById('insertHint');
 // var insertValue : number;
 var treeHeight = 1;
 var arrayOfNode = [];
+insertInputValue.focus();
 btnInsert.onclick = function () {
     return __awaiter(this, void 0, void 0, function* () {
         // console.log(root.getHeight())
@@ -42,6 +43,7 @@ btnInsert.onclick = function () {
             yield insertNodeWithAnimation(+insertValue);
         }
         insertInputValue.value = "";
+        insertInputValue.focus();
         btnInsert.disabled = false;
     });
 };
@@ -63,18 +65,18 @@ function setInstructionForInsertNode(node, data, isInsertable) {
     }
     else if (data < node.value) {
         if (isInsertable) {
-            insertHint.innerHTML = data + " < " + node.value + " And Left is Null. <br/>" + " So added to left";
+            insertHint.innerHTML = data + " is less than " + node.value + " And Left is Null. <br/>" + " So added to left subtree";
         }
         else {
-            insertHint.innerHTML = data + " < " + node.value + " so go left";
+            insertHint.innerHTML = data + " is less than " + node.value + " so will move to left subtree";
         }
     }
     else if (data > node.value) {
         if (isInsertable) {
-            insertHint.innerHTML = data + " > " + node.value + " And Right is Null. <br/>" + " So added to right";
+            insertHint.innerHTML = data + " is greater than " + node.value + " And Right is Null. <br/>" + " So added to right subtree";
         }
         else {
-            insertHint.innerHTML = data + " > " + node.value + " so go right";
+            insertHint.innerHTML = data + " is greater than " + node.value + " so will move to right subtree";
         }
     }
 }

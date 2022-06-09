@@ -32,7 +32,7 @@ var intervalID;
         btnTestStart.classList.add('opacity-50')
     postOrderNodeList = []
     mainPostorder('test');
-    testResult.innerHTML = "Click Node to Start PostOrder Test"
+    testResult.innerHTML = "Click Node to Select it"
     testOrder.innerHTML = "<div>&nbsp;</div>";
 
     startTimer();
@@ -41,7 +41,7 @@ var intervalID;
 modalRestartButton.onclick = () => {
   removeModal();
 
-    testResult.innerHTML = "Click Node to Start PostOrder Test"
+    testResult.innerHTML = "Click Node to Select it"
     testOrder.innerHTML = "<div>&nbsp;</div>";
     btnTestStart.disabled = true;
     if (btnTestStart.disabled)
@@ -64,7 +64,7 @@ btnTestStart.onclick = function () {
     if (btnTestStart.disabled)
         btnTestStart.classList.add('opacity-50');
 
-    testResult.innerHTML = "Click Node to Start PostOrder Test"
+    testResult.innerHTML = "Click Node to Select it"
     testOrder.innerHTML = "<div>&nbsp;</div>";
 
     btnTestStart.disabled = true;

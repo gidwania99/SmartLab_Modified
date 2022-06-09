@@ -17,11 +17,14 @@ function signIn() {
         crossDomain: true,
         data: JSON.stringify(data),
         success: function (response) {
-            console.log(response)
             if (response['status'] == 0) {
                 localStorage.setItem('email', response['email']);
                 localStorage.setItem('name' , response['name']);
-                window.location.href = 'Introduction.html';
+                localStorage.setItem('type' , response['type'])
+                if(response['type'] == 'Admin')
+                    window.location.href = 'admin/admin.html';
+                else
+                    window.location.href = 'Introduction.html';
             }
             else {
                 $('#inputPassword').val('');
@@ -35,10 +38,9 @@ function signIn() {
     });
 }
 
-function validateEmail(){
+function validateEmail(userInput){
     $('#message').html('')
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    var userInput:HTMLInputElement = <HTMLInputElement> document.getElementById('inputEmail')
     if(!userInput.value.match(mailformat)){
         userInput.value = ''
         userInput.focus()
@@ -48,21 +50,41 @@ function validateEmail(){
 
 $(function(){
     $('#inputPassword').keypress(function(event){
+        if(event.keyCode == 13 && document.title == 'Sign In')
+            signIn()
+    })
+})
+
+$(function(){
+    $('#confirmPassword').keypress(function(event){
         if(event.keyCode === 13){
-            if(document.title == 'Sign In')
-                signIn()
-            else
-                signup()
+            signup()
         }
     });
 });
+function validateName(){
+    $('#message').html('')
+    var nameFormat = /^[A-Za-z\s]+$/
+    if(!($('#fname').val().toString()).match(nameFormat)){
+        $('#message').html('Enter Valid Name.')
+        $('#fname').val('').focus()
+    }
+}
 
+function confirmPassVerify(){
+    $('#message').html('')
+    if($('#inputPassword').val().toString() != $('#confirmPassword').val().toString()){
+        $('#message').html('Password and Confirm Password should be same.')
+        $('#inputPassword').val('').focus()
+        $('#confirmPassword').val('')
+    }
+}
 function signup(){
     var fname = $('#fname').val().toString()
     var lname = $('#lname').val().toString()
     var email = $('#inputEmail').val().toString()
     var password = $('#inputPassword').val().toString()
-    if(fname != '' && email != '' && password != ''){
+    if(fname != '' && email != '' && password != '' && $('#confirmPassword').val().toString() != ''){
         sessionStorage.setItem('fname',fname)
         sessionStorage.setItem('lname',lname)
         sessionStorage.setItem('email',email)
@@ -72,7 +94,7 @@ function signup(){
             document.getElementById('verify_email').style.display = 'block'
             document.getElementById('otp_textbox').focus()
             document.getElementById('signup_details').style.display = 'none'
-            otp_timer()
+            otp_timer('SignUp')
         }
         else{ 
             $('#inputEmail').val('').focus()
@@ -154,16 +176,23 @@ function addUser() {
 }
 
 
-function otp_timer(){
+function otp_timer(page){
     var otp_sec = 60
     otp_counter = setInterval(() => {
         otp_sec -= 1
         if(otp_sec == 0){
             clearInterval(otp_counter)
-            document.getElementById('verify_email').style.display = 'none'
-            document.getElementById('signup_details').style.display = 'block'
-            $('#inputEmail').val('')
-            $('#inputPassword').val('')
+            if(page == 'SignUp'){
+                document.getElementById('verify_email').style.display = 'none'
+                document.getElementById('signup_details').style.display = 'block'
+                $('#inputEmail').val('')
+                $('#inputPassword').val('')
+            }
+            else{
+                document.getElementById('email_id_div').style.display = 'block'
+                document.getElementById('forgotPassOtp').style.display = 'none'
+                document.getElementById('updatePass').style.display = 'none'
+            }
             $('#message').html('*OTP Expired!!!')
         }
         else
@@ -173,15 +202,18 @@ function otp_timer(){
     );
 }
 
-function resend_otp(){
+function resend_otp(page){
     clearInterval(otp_counter)
-    signup()
+    if(page == 'SignUp')
+        signup()
+    else
+        forgotPassword()
 }
 
 function changePassword(){
-    var currentPassword = $('#currentPassword').val()
-    var newPassword = $('#newPassword').val()
-    var confirmPassword = $('#confirmPassword').val()
+    var currentPassword = $('#currentPassword').val().toString()
+    var newPassword = $('#newPassword').val().toString()
+    var confirmPassword = $('#confirmPassword').val().toString()
     if(currentPassword !='' && newPassword !='' && confirmPassword !=''){
         if(newPassword == confirmPassword){
             var data = {
@@ -202,7 +234,10 @@ function changePassword(){
                     console.log(response)
                     if(response['status'] == true){
                         alert('Password Changed Succesfully!!')
-                        window.location.href = 'Introduction.html'
+                        if(localStorage['type'] == 'Admin')
+                            window.location.href = 'admin.html'
+                        else
+                            window.location.href = 'Introduction.html'
                     }
                     else{
                         $('#message').html('Incorrect Current Password')
@@ -219,12 +254,16 @@ function changePassword(){
             $('#confirmPassword').val('')
         }
     }
+    else{
+        $('#message').html('Enter Required Values.')
+    }
 }
 
 function forgotPassword(){
     var data = {
         'email': $('#email').val()
     }
+    sessionStorage.setItem('email', $('#email').val().toString())
     $.ajax({
         type: "POST",
         headers: {
@@ -234,6 +273,63 @@ function forgotPassword(){
         url: 'http://127.0.0.1:5000/forgotPassword',
         crossDomain: true,
         data: JSON.stringify(data),
-        success: function(response) {}
+        success: function(response) {
+            console.log(response)
+            if(response['status'] == 0){
+                otp = response['otp']
+                document.getElementById('email_id_div').style.display = 'none'
+                document.getElementById('forgotPassOtp').style.display = 'block'
+                document.getElementById('forgotPassOtp_textbox').focus()
+                otp_timer('ForgotPass')
+            }
+            else{
+                $('#message').html('The User with this email doesnot exist.')
+            }
+        }
     });
+}
+
+function verify_otp(){
+    if($('#forgotPassOtp_textbox').val().toString() == otp){
+        document.getElementById('forgotPassOtp').style.display = 'none'
+        document.getElementById('updatePass').style.display = 'block'
+        document.getElementById('newPassword_forgotPass').focus()
+    }
+    else{
+        document.getElementById('email_id_div').style.display = 'block'
+        document.getElementById('forgotPassOtp').style.display = 'none'
+        $('#message').html('Incorrect OTP.')
+    }
+}
+
+function updatePass(){
+    clearInterval(otp_counter)
+    var newPass = $('#newPassword_forgotPass').val()
+    var confirmPass = $('#confirmPassword_forgotPass').val()
+    if(newPass != '' && newPass == confirmPass ){
+        var data = {
+            'email': sessionStorage.getItem('email'),
+            'password':newPass
+        }
+        $.ajax({
+            type: "POST",
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            url: 'http://127.0.0.1:5000/updatePassword',
+            crossDomain: true,
+            data: JSON.stringify(data),
+            success: function(response) {
+                if(response['status'] == 0){
+                    alert('Password Updated Successfully!!!')
+                    window.location.href = 'signin.html'
+                }
+            }
+        });
+
+    }
+    else{
+        $('#updatePass_message').html('New Password and Confirm Password should be same. It cannot be null')
+    }
 }

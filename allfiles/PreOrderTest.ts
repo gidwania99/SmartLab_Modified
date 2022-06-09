@@ -31,14 +31,14 @@ modalNewButton.onclick = () => {
     mainPreorder('test');
      removeModal();
 
-    testResult.innerHTML = "Click Node to Start PostOrder TestClick Node to Start PreOrder traversal Test"
+    testResult.innerHTML = "Click Node to Select it"
     testOrder.innerHTML = "<div>&nbsp;</div>";
     startTimer();
 };
 modalRestartButton.onclick = () => {
      removeModal();
 
-    testResult.innerHTML = "Click Node to Start PreOrder traversal Test"
+    testResult.innerHTML = "Click Node to Select it"
     testOrder.innerHTML = "<div>&nbsp;</div>";
     btnTestStart.disabled = true;
     if (btnTestStart.disabled)
@@ -60,7 +60,7 @@ btnTestStart.onclick = function () {
     btnTestStart.disabled = true;
     if (btnTestStart.disabled)
         btnTestStart.classList.add('opacity-50');
-    testResult.innerHTML = "Click Node to Start PreOrder traversal Test"
+    testResult.innerHTML = "Click Node to Select it"
     testOrder.innerHTML = "<div>&nbsp;</div>";
     btnTestStart.disabled = true;
     testTimer.innerHTML = "Time Left : 03:00"

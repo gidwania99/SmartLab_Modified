@@ -1,5 +1,5 @@
-var min : number
-var sec : number
+var min = 0
+var sec = 0
 var sim_min = 0
 var sim_sec = 0
 var email 
@@ -42,7 +42,7 @@ function checkAuthMiddleLevel(page = null , experiment = null){
     if(localStorage.getItem('email') == null)
         window.location.href = '../signin.html';
 
-    email =sessionStorage.getItem('email')
+    email =localStorage.getItem('email')
     $('#welcomeMsg').html('Welcome ' + localStorage.getItem('name'));
 
     if(localStorage.getItem('currentPage') != null)
@@ -77,9 +77,13 @@ function logoutMiddleLevel(){
     localStorage.clear()
     window.location.href= '../signin.html'
 }
+
 window.addEventListener('beforeunload' , function(e){
-    if(sessionStorage.getItem('currentPage') != null)
-        footPrint()
+    if(sessionStorage.getItem('currentPage') != null){
+        sessionStorage.setItem('min' , min.toString())
+        sessionStorage.setItem('sec' , sec.toString())
+    }
+
 });
 
 function footPrint(page = null , experiment = null){
@@ -88,8 +92,8 @@ function footPrint(page = null , experiment = null){
         "email": email,
         "page": sessionStorage.getItem('currentPage'),
         "experiment": sessionStorage.getItem('currentExperiment'),
-        "min": min,
-        "sec": sec,
+        "min": sessionStorage.getItem('min'),
+        "sec": sessionStorage.getItem('sec'),
         "moveToPage": page,
         "moveToExperiment": experiment
     };
@@ -209,6 +213,8 @@ function getHighScore(experiment){
         success: function(response){
             var len = response.length;
             var table:HTMLTableElement = <HTMLTableElement>document.getElementById('highscoreTable')
+
+            table.className = "table table-dark table-striped"
             var row = table.insertRow(0)
             var cell1 = row.insertCell(0)
             var cell2 = row.insertCell(1)

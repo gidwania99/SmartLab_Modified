@@ -15,26 +15,30 @@ const searchOrder: HTMLDivElement = <HTMLDivElement>document.getElementById("sea
 var searchValue: number;
 btnSearch.onclick = searchNode;
 
+searchInputValue.focus()
+
 
 function writeInstructionForSearch(node1: BinarySearchTreeNode) {
 	if (searchValue < node1.value && node1.left == null && node1.right == null) {
 		searchHint.innerHTML = "Left & Right Subtree is Empty ";
 	}
 	else if (searchValue < node1.value && node1.left != null) {
-		searchHint.innerHTML = searchValue + " < " + node1.value + "  So Go Left";
+		searchHint.innerHTML = searchValue + " is less than " + node1.value + "  So will move to left subtree";
 	}
 
 	else if (searchValue < node1.value && node1.left == null) {
 		searchHint.innerHTML = "Left Subtree is Empty ";
 	}
 	else if (searchValue > node1.value && node1.right != null) {
-		searchHint.innerHTML = searchValue + " > " + node1.value + "  So Go Right";
+		searchHint.innerHTML = searchValue + " is greater than " + node1.value + "  So will move to right subtree";
 	}
 	else if (searchValue > node1.value && node1.right == null) {
 		searchHint.innerHTML = "Right Subtree is Empty";
 	}
 	else if (searchValue === node1.value) {
-		searchHint.innerHTML = "Found"
+		searchHint.innerHTML = "Node Found"
+		searchInputValue.value = ''
+		searchInputValue.focus()
 	} else {
 		searchHint.innerHTML = "IN ELSE BLOCK"
 	}
@@ -72,7 +76,9 @@ async function searchNode() {
 		}
 	}
 	if (!flag) {
-		searchHint.innerHTML = "Not Found"
+		searchHint.innerHTML = "Node Not Found"
+		searchInputValue.value = ''
+		searchInputValue.focus()
 	}
 
 }

@@ -9,7 +9,8 @@ window.onresize = () => {
     }
 }
     
-    var numInputBox:HTMLInputElement;
+    var numInputBox:HTMLInputElement = <HTMLInputElement>document.getElementById("num");
+    numInputBox.focus();
     let num:number=0;
     const btnDelete: HTMLButtonElement = <HTMLButtonElement>document.getElementById("delete")
     btnDelete.onclick=deleteNode;
@@ -22,6 +23,7 @@ window.onresize = () => {
     var rect=canvas.getBoundingClientRect();
     
     mainDeletion();
+
     
     function changeColour(node:BinarySearchTreeNode){
         
@@ -48,8 +50,6 @@ window.onresize = () => {
         demoHints.innerText =string;
     }
     async function deleteNode(){
-      
-        numInputBox=<HTMLInputElement>document.getElementById("num");
         num=+(numInputBox.value);
         if(num<=0) 
             writeInstructions("Please enter a positive integer!!");
@@ -69,14 +69,14 @@ window.onresize = () => {
             
             changeColour(node);
             if(num<node.value){
-                instruction=num+" < "+node.value+"\nGo to the left subtree."
+                instruction=num+" is less than "+node.value+"\nso will move to the left subtree."
                 writeInstructions(instruction);
                 setTimeout(()=>{
                     SearchNode(node.left);
                 },2500);
             }
             else if(num>node.value){
-                instruction=num+" > "+node.value+"\nGo to the right subtree."
+                instruction=num+" is greater than "+node.value+"\nso will move to the right subtree."
                 writeInstructions(instruction);
                 setTimeout(()=>{
                     SearchNode(node.right);
@@ -97,7 +97,9 @@ window.onresize = () => {
         }
         
         else{
-            instruction=num+" not found!!"
+            instruction="Node not found!!"
+            numInputBox.value = ''
+            numInputBox.focus()
             writeInstructions(instruction);
         }
         
@@ -286,7 +288,8 @@ window.onresize = () => {
             
         }
         
-        
+        numInputBox.value = ''
+        numInputBox.focus()
     }
      function replaceNode(node:BinarySearchTreeNode){
       

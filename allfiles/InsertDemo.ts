@@ -11,6 +11,9 @@ const insertHint : HTMLDivElement = <HTMLDivElement>document.getElementById('ins
 // var insertValue : number;
 var treeHeight : number = 1;
 var arrayOfNode : BinarySearchTreeNode[] = [];
+
+insertInputValue.focus()
+
 btnInsert.onclick = async function(){
 	// console.log(root.getHeight())
 	btnInsert.disabled = true;
@@ -32,6 +35,7 @@ btnInsert.onclick = async function(){
 	}
 	
 	insertInputValue.value = "";
+	insertInputValue.focus()
 	btnInsert.disabled = false;
 }
 function restoreInsertCircle(node) {
@@ -60,16 +64,16 @@ function setInstructionForInsertNode(node : BinarySearchTreeNode,data ,isInserta
 	}
 	else if(data < node.value){
 		if (isInsertable) {
-			insertHint.innerHTML = data + " < " + node.value + " And Left is Null. <br/>" + " So added to left"
+			insertHint.innerHTML = data + " is less than " + node.value + " And Left is Null. <br/>" + " So added to left subtree"
 		}else{
-			insertHint.innerHTML = data + " < " + node.value + " so go left"
+			insertHint.innerHTML = data + " is less than " + node.value + " so will move to left subtree"
 		}
 	}
 	else if(data > node.value){
 		if (isInsertable) {
-			insertHint.innerHTML = data + " > " + node.value + " And Right is Null. <br/>" + " So added to right"
+			insertHint.innerHTML = data + " is greater than " + node.value + " And Right is Null. <br/>" + " So added to right subtree"
 		}else{
-			insertHint.innerHTML = data + " > " + node.value + " so go right"
+			insertHint.innerHTML = data + " is greater than " + node.value + " so will move to right subtree"
 		}
 	}
 }

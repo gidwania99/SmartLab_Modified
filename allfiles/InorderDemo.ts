@@ -153,7 +153,7 @@ async function inOrderManually(node) {
                     btnRestartInorder.style.display = "inline-block"
 
 
-                    delayAnimationInorder(curr, "Inorder Traversal is completed.<br/>Click the Restart Button To Restart Simulation");
+                    delayAnimationInorder(curr, "Inorder Traversal is completed.<br/>Click the Restart Button To Restart Demo");
 
 
                 }

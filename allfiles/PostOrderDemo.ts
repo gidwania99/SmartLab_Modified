@@ -214,7 +214,7 @@ async function postOrderManually(node) {
     stopBlink();
     btnNext.style.display = "none";
     btnRestart.style.display = "inline-block"
-    demoHints.innerText = "Postorder Traversal is completed\nClick Restart Button To Restart Simulation.";
+    demoHints.innerText = "Postorder Traversal is completed\nClick Restart Button To Restart Demo.";
     // hints.setAttribute('data-after',' ');
 
 

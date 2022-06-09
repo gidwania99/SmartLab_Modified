@@ -30,6 +30,7 @@ class User(db.Document):
     lastName = db.StringField()
     email = db.StringField()
     password = db.StringField()
+    type = db.StringField()
     reg_date = db.DateTimeField(datetime.now)
 
 
@@ -71,8 +72,7 @@ def generateOTP():
 def sendOTP(email):
     try:
         otp = generateOTP()
-        email_content = 'To authenticate your email , please use the following One Time Password(OTP):\n' 
-        + otp + '\n\nDo not Share this OTP with anyone.'
+        email_content = 'To authenticate your email , please use the following One Time Password(OTP):\n' + otp + '\n\nDo not Share this OTP with anyone.'
         msg = EmailMessage()
         msg['Subject'] = 'Email Verification'
         msg['From'] = 'smartlabsample@gmail.com'
@@ -97,10 +97,9 @@ def emailVerify():
     users = User.objects(email= email).first()
     if not users:
         msg = sendOTP(email)
-        return jsonify(msg)
     else:
         msg = {"status":1}
-        return jsonify(msg)
+    return jsonify(msg)
 
           
 @app.route('/signUp', methods=['POST'])
@@ -115,7 +114,10 @@ def signUp():
     # create hashed password
 
     hashed_password = generate_password_hash(_password)
-    usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password, reg_date=today)
+    if data['type']:
+        usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password, type= data['type'], reg_date=today)
+    else:
+        usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password , reg_date=today)
     usersave.save()
     msg =  {"msg":"You've Registered Successfully!",
             "status":0,
@@ -136,13 +138,28 @@ def login():
         password = user_rs['password']
         # Compare Passwords 
         if check_password_hash(password, user_password):
+            type = ''
+            if user_rs['type']:
+                type = 'Admin'
             msg = {"msg":"Successfully Logged In!",
                    "status":0,
                    "email":email,
-                   "name":user_rs['firstName']}
+                   "name":user_rs['firstName'],
+                   "type":type}
             return jsonify(msg)
     msg = {"msg":"Invalid Username or Password!",
            "status":1}
+    return jsonify(msg)
+
+@app.route('/forgotPassword' , methods=['POST'])
+def forgotPassword():
+    data = request.get_json()
+    email = data['email']
+    users = User.objects(email= email).first()
+    if users:
+        msg = sendOTP(email)
+    else:
+        msg = {'status':1}
     return jsonify(msg)
 
 
@@ -207,18 +224,42 @@ def getHighScore():
 
 @app.route('/getFootPrints' , methods=['POST'])
 def getFootPrint():
-    data = FootPrints.objects.aggregate([
-        {
-            '$group': { '_id': "$page", 'sum_min': { '$sum': "$time_spent.min" }}
-        }
-    ])
-    data_dict = list(data)
+    data = request.get_json()
+    if data['type'] == 'page':
+        obj = FootPrints.objects.aggregate([
+            {
+                '$group': { '_id': "$page", 'sum_min': { '$sum': "$time_spent.min" }}
+            }
+        ])
+    elif data['type'] == 'experiment':
+        obj = FootPrints.objects.aggregate([
+            {
+                '$group': { '_id': "$experiment", 'sum_min': { '$sum': "$time_spent.min" }}
+            }
+        ])
+    else:
+        obj = FootPrints.objects.aggregate([
+           {"$match" : {"page" : data['type']}},
+           {"$group": {"_id": '$moves_to.page' , "sum_min": {"$sum": 1}}},
+        ])
+
+    data_dict = list(obj)
     return jsonify(data_dict)
 
-def updatePassword(email , password):
-    hashed_password = generate_password_hash(password)
-    User.objects(email = email).update_one(set__password = hashed_password)
-    
+@app.route('/updatePassword', methods=['POST'])
+def updatePassword(email = '' , password = ''):
+    if(email == '' and password == ''):
+        data = request.get_json()
+        email = data['email']
+        password = data['password']
+        hashed_password = generate_password_hash(password)
+        User.objects(email = email).update_one(set__password = hashed_password)
+        msg = {'status':0}
+        return jsonify(msg)
+    else:
+        hashed_password = generate_password_hash(password)
+        User.objects(email = email).update_one(set__password = hashed_password)
+        
 @app.route('/changePassword' , methods=['POST'])
 def changePassword():
     data = request.get_json()

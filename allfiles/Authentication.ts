@@ -148,7 +148,8 @@ function addUser() {
             'fname': sessionStorage.getItem('fname'),
             'lname': sessionStorage.getItem('lname'),
             'email': sessionStorage.getItem('email'),
-            'password': sessionStorage.getItem('password')
+            'password': sessionStorage.getItem('password'),
+            'type': ''
         }
         $.ajax({ 
             type: "POST",
@@ -169,6 +170,7 @@ function addUser() {
         });
     }
     else{
+        otp_txt.innerHTML=''
         document.getElementById('verify_email').style.display = 'none'
         document.getElementById('signup_details').style.display = 'block'
         $('#message').html('*Incorrect OTP, check your email!!!')

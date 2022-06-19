@@ -114,10 +114,10 @@ def signUp():
     # create hashed password
 
     hashed_password = generate_password_hash(_password)
-    if data['type']:
-        usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password, type= data['type'], reg_date=today)
-    else:
+    if data['type'] == '':
         usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password , reg_date=today)
+    else:
+        usersave = User(firstName=_fname,lastName=_lname, email=_email, password= hashed_password, type= data['type'] , reg_date=today)
     usersave.save()
     msg =  {"msg":"You've Registered Successfully!",
             "status":0,

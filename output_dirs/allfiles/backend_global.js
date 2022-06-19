@@ -4,65 +4,35 @@ var sim_min = 0;
 var sim_sec = 0;
 var email;
 function checkAuth(page = null, experiment = null) {
-    if (localStorage.getItem('email') == null)
+    if (localStorage.getItem('email') == null) {
+        if (experiment == 'Stack' || experiment == 'BST' || page == 'Aim' || page == 'Index')
+            window.location.href = '../signin.html';
+        else if (experiment == null)
+            window.location.href = 'signin.html';
+        else
+            window.location.href = '../../signin.html';
+    }
+    email = localStorage.getItem('email');
+    $('#welcomeMsg').html('Welcome ' + localStorage.getItem('name'));
+    /*if(sessionStorage.getItem('currentPage') != null)
+        footPrint(page , experiment)*/
+    if (experiment != null) {
+        sessionStorage.setItem('currentPage', page);
+        sessionStorage.setItem('currentExperiment', experiment);
+        recordTime();
+    }
+}
+function logout(directory_level) {
+    if (sessionStorage.getItem('currentPage') != null)
+        footPrint();
+    sessionStorage.clear();
+    localStorage.clear();
+    if (directory_level == 0)
         window.location.href = 'signin.html';
-    console.log(localStorage.getItem('email'));
-    email = localStorage.getItem('email');
-    $('#welcomeMsg').html('Welcome ' + localStorage.getItem('name'));
-    if (sessionStorage.getItem('currentPage') != null)
-        footPrint(page, experiment);
-    if (experiment != null) {
-        sessionStorage.setItem('currentPage', page);
-        sessionStorage.setItem('currentExperiment', experiment);
-        recordTime();
-    }
-}
-function checkAuthFirstLevel(page = null, experiment = null) {
-    if (localStorage.getItem('email') == null)
-        window.location.href = '../../signin.html';
-    email = localStorage.getItem('email');
-    $('#welcomeMsg').html('Welcome ' + localStorage.getItem('name'));
-    if (sessionStorage.getItem('currentPage') != null)
-        footPrint(page, experiment);
-    if (experiment != null) {
-        sessionStorage.setItem('currentPage', page);
-        sessionStorage.setItem('currentExperiment', experiment);
-        recordTime();
-    }
-}
-function checkAuthMiddleLevel(page = null, experiment = null) {
-    if (localStorage.getItem('email') == null)
+    else if (directory_level == 1)
         window.location.href = '../signin.html';
-    email = localStorage.getItem('email');
-    $('#welcomeMsg').html('Welcome ' + localStorage.getItem('name'));
-    if (localStorage.getItem('currentPage') != null)
-        footPrint(page, experiment);
-    if (experiment != null) {
-        sessionStorage.setItem('currentPage', page);
-        sessionStorage.setItem('currentExperiment', experiment);
-        recordTime();
-    }
-}
-function logout() {
-    if (sessionStorage.getItem('currentPage') != null)
-        footPrint();
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = 'signin.html';
-}
-function logoutFirstLevel() {
-    if (sessionStorage.getItem('currentPage') != null)
-        footPrint();
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = '../../signin.html';
-}
-function logoutMiddleLevel() {
-    if (sessionStorage.getItem('currentPage') != null)
-        footPrint();
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = '../signin.html';
+    else
+        window.location.href = '../../signin.html';
 }
 window.addEventListener('beforeunload', function (e) {
     if (sessionStorage.getItem('currentPage') != null) {
@@ -70,30 +40,33 @@ window.addEventListener('beforeunload', function (e) {
         sessionStorage.setItem('sec', sec.toString());
     }
 });
-function footPrint(page = null, experiment = null) {
-    console.log(min, sec);
-    var data = {
-        "email": email,
-        "page": sessionStorage.getItem('currentPage'),
-        "experiment": sessionStorage.getItem('currentExperiment'),
-        "min": sessionStorage.getItem('min'),
-        "sec": sessionStorage.getItem('sec'),
-        "moveToPage": page,
-        "moveToExperiment": experiment
-    };
-    $.ajax({
-        type: 'POST',
-        headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json'
-        },
-        url: 'http://127.0.0.1:5000/addFootPrints',
-        crossDomain: true,
-        data: JSON.stringify(data),
-        success: function (response) {
-            console.log(response);
-        }
-    });
+function footPrint(link = null, page = null, experiment = null) {
+    if (sessionStorage.getItem('currentPage') != null) {
+        var data = {
+            "email": email,
+            "page": sessionStorage.getItem('currentPage'),
+            "experiment": sessionStorage.getItem('currentExperiment'),
+            "min": min,
+            "sec": sec,
+            "moveToPage": page,
+            "moveToExperiment": experiment
+        };
+        $.ajax({
+            type: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+            url: 'http://127.0.0.1:5000/addFootPrints',
+            crossDomain: true,
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    }
+    if (link != null)
+        window.location.href = link;
 }
 function recordTime() {
     min = sec = 0;

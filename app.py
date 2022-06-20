@@ -8,6 +8,7 @@ from flask_cors import CORS
 import random
 import smtplib , ssl
 from email.message import EmailMessage
+import urllib
  
 
 
@@ -15,11 +16,13 @@ app = Flask(__name__)
 app.secret_key = 'SmartLab2022'
 CORS(app)
 
-app.config['MONGODB_SETTINGS'] = {
-    'db': 'SmartLab',
-    'host': 'localhost',
-    'port': 27017
-}
+DB_URI='mongodb+srv://smartLab2022:' + urllib.parse.quote('smartLab@2022') + '@cluster0.iftw1rm.mongodb.net/?retryWrites=true&w=majority'
+app.config['MONGODB_HOST'] =DB_URI
+# #app.config['MONGODB_SETTINGS'] = {
+#     'db': 'SmartLab',
+#     'host': 'localhost',
+#     'port': 27017
+# }
 
  
 db = MongoEngine()
@@ -62,6 +65,10 @@ class LeaderBoard(db.Document):
     score = db.FloatField()
     time_taken = db.DictField()
     date = db.DateTimeField(datetime.now)
+
+@app.route('/home' , methods=['GET'])
+def home():
+    return jsonify('Home')
 
 def generateOTP():
     otp = ''

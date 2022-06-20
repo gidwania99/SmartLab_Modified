@@ -2,6 +2,10 @@ var min = 0;
 var sec = 0;
 var sim_min = 0;
 var sim_sec = 0;
+var currentPage = '';
+var currentExperiment = '';
+var footPrintFlag = true;
+var pageTimer;
 var email;
 function checkAuth(page = null, experiment = null) {
     if (localStorage.getItem('email') == null) {
@@ -14,18 +18,15 @@ function checkAuth(page = null, experiment = null) {
     }
     email = localStorage.getItem('email');
     $('#welcomeMsg').html('Welcome ' + localStorage.getItem('name'));
-    /*if(sessionStorage.getItem('currentPage') != null)
-        footPrint(page , experiment)*/
     if (experiment != null) {
-        sessionStorage.setItem('currentPage', page);
-        sessionStorage.setItem('currentExperiment', experiment);
+        currentPage = page;
+        currentExperiment = experiment;
         recordTime();
     }
 }
 function logout(directory_level) {
-    if (sessionStorage.getItem('currentPage') != null)
+    if (currentPage != null)
         footPrint();
-    sessionStorage.clear();
     localStorage.clear();
     if (directory_level == 0)
         window.location.href = 'signin.html';
@@ -35,17 +36,16 @@ function logout(directory_level) {
         window.location.href = '../../signin.html';
 }
 window.addEventListener('beforeunload', function (e) {
-    if (sessionStorage.getItem('currentPage') != null) {
-        sessionStorage.setItem('min', min.toString());
-        sessionStorage.setItem('sec', sec.toString());
-    }
+    clearInterval(pageTimer);
+    if (currentPage != null && footPrintFlag)
+        footPrint();
 });
 function footPrint(link = null, page = null, experiment = null) {
     if (sessionStorage.getItem('currentPage') != null) {
         var data = {
             "email": email,
-            "page": sessionStorage.getItem('currentPage'),
-            "experiment": sessionStorage.getItem('currentExperiment'),
+            "page": currentPage,
+            "experiment": currentExperiment,
             "min": min,
             "sec": sec,
             "moveToPage": page,
@@ -65,12 +65,13 @@ function footPrint(link = null, page = null, experiment = null) {
             }
         });
     }
+    footPrintFlag = false;
     if (link != null)
         window.location.href = link;
 }
 function recordTime() {
     min = sec = 0;
-    setInterval(() => {
+    pageTimer = setInterval(() => {
         if (sec < 60)
             sec += 1;
         else {
